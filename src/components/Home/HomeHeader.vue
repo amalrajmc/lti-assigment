@@ -17,6 +17,7 @@
                   placeholder="Search Character"
                   :value="inputText"
                   @input="$emit('update:modelValue', $event.target.value)"
+                  @compositionupdate="compositionUpdate($event)"
                 />
                 <span class="icon is-small is-left search-image-wrap">
                   <img
@@ -39,6 +40,10 @@ export default {
   methods: {
     onChanged(e) {
       this.$emit("update:modelValue", e.currentTarget.value);
+    },
+        compositionUpdate: function(event)
+    {
+        this.inputText = event.data;
     },
   },
 };
