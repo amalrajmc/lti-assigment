@@ -16,8 +16,7 @@
                   type="text"
                   placeholder="Search Character"
                   :value="inputText"
-                  @input="$emit('onChange', $event.target.value)"
-                  @compositionupdate="compositionUpdate($event)"
+                  @input="$emit('update:modelValue', $event.target.value)"
                 />
                 <span class="icon is-small is-left search-image-wrap">
                   <img
@@ -36,12 +35,8 @@
 <script>
 export default {
   props: ["input-text"],
-  emits: ["onChange"],
+  emits: ["update:modelValue"],
   methods: {
-        compositionUpdate: function(event)
-    {
-        this.inputText = event.data;
-    },
   },
 };
 </script>
