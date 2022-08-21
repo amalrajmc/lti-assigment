@@ -3,25 +3,37 @@ import { createStore } from 'vuex'
 const store=createStore({
   state: {
     characters:[],
-    phrases:[]
+    quotes:[]
 
   },
   getters: {
-    characters(state) {
+    getCharacters(state) {
       return state.characters.map(x=>{x.fullName=x.firstName+' '+x.lastName;
-      return x;
-    })
+     return x;
+    });
     },
+    getCharacter(state,getters){
+      return (id) => {
+      return getters.getCharacters.find(x => x._id == id);
+    }},
+    getQuotes(state){
+      return (id)=>{
+        return state.quotes.filter(x=>x.character== id)
+      }
+    }
   },
   mutations: {
     setCharacters(state,payload){
       state.characters=payload;
+    },
+    setQuotes(state,payload){
+      state.quotes=payload;
     }
   },
   actions: {
-    async fetchData(context) {
+    async fetchCharacters(context) {
       try {
-        await fetch('./data/characters.json').then(response => {
+        await fetch('/data/characters.json').then(response => {
           if(response.ok){return response.json()}}).then(data=>{
           context.commit('setCharacters', data.data)
         });
@@ -30,6 +42,20 @@ const store=createStore({
         catch (error) {
             console.log(error)
         }
+    },
+    async fetchQuotes(context){
+      try { 
+        await fetch('/data/phrases.json').then(response=>{
+          if(response.ok){
+            return response.json()
+          }
+        }).then(data=>{
+          context.commit('setQuotes',data.data)
+        })
+      }
+      catch(error){
+        console.log(error)
+      }
     }
   },
   modules: {
