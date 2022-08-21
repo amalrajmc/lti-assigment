@@ -1,6 +1,6 @@
 <template>
   <div class="home container-fluid">
-    <home-header :input-text="inputText" v-model="inputText"></home-header>
+    <home-header :input-text="inputText" @onChange="inputChange" ></home-header>
 
     <section class="container">
       <div class="columns is-multiline">
@@ -29,6 +29,11 @@ export default {
     return {
       inputText: "",
     };
+  },
+  methods:{
+    inputChange(value) {
+      this.inputText=value;
+    }
   },
   computed: {
     ...mapGetters(["getCharacters"]),
